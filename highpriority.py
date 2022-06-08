@@ -19,7 +19,7 @@ servicebus_client = ServiceBusClient.from_connection_string(conn_str=CONNECTION_
 
 def send_slack_message(message):
     payload = '{"text":"%s"}' %message
-    response = requests.post('https://hooks.slack.com/services/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',
+    response = requests.post('https://hooks.slack.com/services/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',
                               data = payload)
     print(response.text)
 
