@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, make_response
 from azure.servicebus import ServiceBusClient, ServiceBusMessage
-from myServiceBus import *
+from myServiceBus import sendMessage
 import logging
 import os
 
@@ -87,28 +87,16 @@ def triage_bugs():
             return 'Bad request! This event has been logged.', 400
 
         if request.json['priority'] == "High":
-
+            
             CONNECTION_STR = "Endpoint=sb://service-bus-1704.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=BTEYPRWJwh/okUp12fNpRhf0ccoZAVYRX1IKLte4Fbo="
             QUEUE_NAME = "highpriority"
-            servicebus_client = ServiceBusClient.from_connection_string(conn_str=CONNECTION_STR, logging_enable=True)
-            with servicebus_client:
-                sender = servicebus_client.get_queue_sender(queue_name=QUEUE_NAME)
-                with sender:
-                    message = ServiceBusMessage(str(request.json))
-                    sender.send_messages(message)
-            print(request.json)
+            sendMessage(CONNECTION_STR,QUEUE_NAME,str(request.json))
 
         else:
 
             CONNECTION_STR = "Endpoint=sb://service-bus-1704.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=BTEYPRWJwh/okUp12fNpRhf0ccoZAVYRX1IKLte4Fbo="
             QUEUE_NAME = "generalbugs"
-            servicebus_client = ServiceBusClient.from_connection_string(conn_str=CONNECTION_STR, logging_enable=True)
-            with servicebus_client:
-                sender = servicebus_client.get_queue_sender(queue_name=QUEUE_NAME)
-                with sender:
-                    message = ServiceBusMessage(request.json)
-                    sender.send_messages(message)
-            print(request.json)
+            sendMessage(CONNECTION_STR,QUEUE_NAME,str(request.json))
 
         return request.json
 
