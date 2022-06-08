@@ -5,15 +5,14 @@ from azure.servicebus import ServiceBusClient, ServiceBusMessage
 from slack import WebClient
 from slack.errors import SlackApiError
 
-def sendMessage(output):
-    CONNECTION_STR = "Endpoint=sb://service-bus-1704.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=BTEYPRWJwh/okUp12fNpRhf0ccoZAVYRX1IKLte4Fbo="
-    servicebus_client = ServiceBusClient.from_connection_string(conn_str=CONNECTION_STR, logging_enable=True)
+def sendMessage(connection,queue,output):
 
+    servicebus_client = ServiceBusClient.from_connection_string(conn_str=connection, logging_enable=True)
     with servicebus_client:
-        sender = servicebus_client.get_queue_sender(queue_name="high")
+        sender = servicebus_client.get_queue_sender(queue_name=queue)
         with sender:
             message = ServiceBusMessage(output)
-        sender.send_messages(message)
+            sender.send_messages(message)
     print(output)
     print("Done sending messages")
     print("-----------------------")
