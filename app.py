@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask,request
 from myServiceBus import *
 import logging
 import os
@@ -41,11 +41,13 @@ def before_first_request():
 def triage_bugs():
 
     #Validating the API request
-    if not request.json or not 'priority' in request.json or request.json['priority'] not in {"High", "Medium", "Low"}:
-        app.logger.info(request.json)
-        return 'Bad request! This event has been logged.', 400
+    if not request.json or not 'title' in request.json or not 'house' in request.json or not 'priority' in request.json\
+    or request.json['priority'] not in {"High", "Medium", "Low"}\
+    or request.json['house'] not in {"Gryffindor", "Slytherin", "Ravenclaw", "Hufflepuff"}:
+        QUEUE_NAME = "invalidrequests"
+        sendMessage(CONNECTION_STR,QUEUE_NAME,str(request.json))
 
-    if request.json['priority'] == "High":
+    elif request.json['priority'] == "High":
         QUEUE_NAME = "highpriority"
         sendMessage(CONNECTION_STR,QUEUE_NAME,str(request.json))
 
