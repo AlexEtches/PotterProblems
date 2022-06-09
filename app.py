@@ -21,16 +21,17 @@ def triage_bugs():
     or request.json['house'] not in {"Gryffindor", "Slytherin", "Ravenclaw", "Hufflepuff"}:
         QUEUE_NAME = "invalidrequests"
         sendMessage(CONNECTION_STR,QUEUE_NAME,str(request.json))
+        return "Invalid request, check email for more details."
 
     elif request.json['priority'] == "High":
         QUEUE_NAME = "highpriority"
         sendMessage(CONNECTION_STR,QUEUE_NAME,str(request.json))
+        return "Message sent to slack channel."
 
     else:
         QUEUE_NAME = "generalbugs"
         sendMessage(CONNECTION_STR,QUEUE_NAME,str(request.json))
-
-    return request.json
+        return "Message sent to trello card."
 
 if __name__ == '__main__':
     app.run()
