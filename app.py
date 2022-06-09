@@ -1,6 +1,5 @@
 from flask import Flask,request
 from myServiceBus import *
-import logging
 import os
 
 app = Flask(__name__)
