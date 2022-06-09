@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-CONNECTION_STR = "Endpoint=sb://service-bus-1704.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=BTEYPRWJwh/okUp12fNpRhf0ccoZAVYRX1IKLte4Fbo="
+CONNECTION_STR = os.getenv("CONNECTION_STRING")
 
 @app.route('/', methods=['GET']) #tell which HTTP method we are using (GET) and what route (extra bit of the URL) this method will be activated on.  In this case nothing and so home
 def home():
