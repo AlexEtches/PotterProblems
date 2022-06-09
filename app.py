@@ -13,30 +13,6 @@ def home():
     output = "<h1>Welcome to the Hogwarts issue sorting program.</h1>"
     return output
 
-# Implementing logging to a file
-@app.before_first_request
-def before_first_request():
-    log_level = logging.INFO
-
-    for handler in app.logger.handlers:
-        app.logger.removeHandler(handler)
-
-    root = os.path.dirname(os.path.abspath(__file__))
-    logdir = os.path.join(root, 'logs')
-    if not os.path.exists(logdir):
-        os.mkdir(logdir)
-    log_file = os.path.join(logdir, 'app.log')
-    handler = logging.FileHandler(log_file)
-    handler.setLevel(log_level)
-    app.logger.addHandler(handler)
-
-    app.logger.setLevel(log_level)
-
-    defaultFormatter = logging.Formatter(
-        '[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
-    handler.setFormatter(defaultFormatter)
-
-
 @app.route("/api", methods=['POST'])
 def triage_bugs():
 
