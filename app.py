@@ -7,7 +7,7 @@ app.config["DEBUG"] = True
 
 CONNECTION_STR = os.getenv("CONNECTION_STRING")
 
-@app.route('/', methods=['GET']) #tell which HTTP method we are using (GET) and what route (extra bit of the URL) this method will be activated on.  In this case nothing and so home
+@app.route('/', methods=['GET'])
 def home():
     output = "<h1>Welcome to the Hogwarts issue sorting program.</h1>"
     return output
