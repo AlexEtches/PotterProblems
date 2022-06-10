@@ -1,18 +1,15 @@
 [
     {
-        "id": 1,
         "title": "Ron is vomiting slugs again",
         "house": "Gryffindor",
         "priority": "High"
     },
     {
-        "id": 2,
         "title": "Hermione has lost her Potions textbook",
         "house": "Gryffindor",
         "priority": "Medium"
     },
     {
-        "id": 3,
         "title": "Harry's dorm is messy",
         "house": "Gryffindor",
         "priority": "Low"
